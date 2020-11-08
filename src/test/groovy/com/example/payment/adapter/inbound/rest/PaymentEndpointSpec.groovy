@@ -4,24 +4,19 @@ import com.example.payment.domain.AddPaymentUseCase
 import com.example.payment.domain.DeletePaymentUseCase
 import com.example.payment.domain.FindAllPaymentsUseCase
 import com.example.payment.domain.GetPaymentByIdUseCase
-import com.example.payment.domain.SampleCommands
+import com.example.payment.SampleCommands
 import com.example.payment.domain.UpdatePaymentUseCase
 import com.example.payment.domain.model.Payment
 import com.example.payment.domain.model.PaymentId
-import groovy.json.JsonOutput
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import spock.lang.Specification
 
 import static groovy.json.JsonOutput.toJson
 import static org.springframework.http.MediaType.APPLICATION_JSON
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
@@ -31,10 +26,10 @@ class PaymentEndpointSpec extends Specification implements SampleCommands{
     MockMvc mvc
 
     @SpringBean
-    AddPaymentUseCase addPaymentUseCase = Mock();
+    AddPaymentUseCase addPaymentUseCase = Mock()
 
     @SpringBean
-    GetPaymentByIdUseCase getPaymentByIdUseCase = Mock();
+    GetPaymentByIdUseCase getPaymentByIdUseCase = Mock()
 
     @SpringBean
     FindAllPaymentsUseCase findAllPaymentsUseCase = Mock()
@@ -64,7 +59,7 @@ class PaymentEndpointSpec extends Specification implements SampleCommands{
         addPaymentUseCase.execute(addOneEurPaymentCommand) >> payment
 
         when:
-        def result = mvc.perform(post('/payments').contentType(APPLICATION_JSON).content(toJson(request)));
+        def result = mvc.perform(post('/payments').contentType(APPLICATION_JSON).content(toJson(request)))
 
         then:
         result.andExpect(status().isCreated())

@@ -1,5 +1,6 @@
 package com.example.payment.domain
 
+import com.example.payment.SampleCommands
 import com.example.payment.adapter.outbound.respository.inmemory.InMemoryPaymentRepositoryConfig
 import com.example.payment.domain.model.Iban
 import com.example.payment.domain.model.Money
@@ -7,9 +8,9 @@ import com.example.payment.domain.model.UserId
 import spock.lang.Specification
 
 class UpdatePaymentUseCaseSpec extends Specification implements SampleCommands{
-    PaymentRepository paymentRepository = new InMemoryPaymentRepositoryConfig().paymentRepository()
+    PaymentRepository paymentRepository = new InMemoryPaymentRepositoryConfig().inMemoryPaymentRepository()
     AddPaymentUseCase addPaymentUseCase = new PaymentConfiguration().addPaymentUseCase(paymentRepository)
-    UpdatePaymentUseCase updatePaymentUseCase = new PaymentConfiguration().updatePaymentUseCase(paymentRepository);
+    UpdatePaymentUseCase updatePaymentUseCase = new PaymentConfiguration().updatePaymentUseCase(paymentRepository)
 
     def "should update payment"() {
         given: "module has payment"

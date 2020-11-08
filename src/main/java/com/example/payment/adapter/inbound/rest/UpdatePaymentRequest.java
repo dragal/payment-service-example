@@ -1,6 +1,5 @@
 package com.example.payment.adapter.inbound.rest;
 
-import com.example.payment.domain.AddPaymentCommand;
 import com.example.payment.domain.UpdatePaymentCommand;
 import com.example.payment.domain.model.Iban;
 import com.example.payment.domain.model.Money;
@@ -17,7 +16,7 @@ import java.math.BigDecimal;
 import java.util.Currency;
 
 @Value
-public class UpdatePaymentRequest {
+class UpdatePaymentRequest {
     @NotNull
     private final String id;
 

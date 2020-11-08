@@ -3,7 +3,6 @@ package com.example.payment.adapter.outbound.respository.csv;
 import com.example.payment.domain.PaymentRepository;
 import com.example.payment.domain.model.Payment;
 import com.example.payment.domain.model.PaymentId;
-import com.opencsv.CSVWriter;
 import com.opencsv.bean.*;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -58,7 +56,7 @@ class CsvPaymentRepository implements PaymentRepository {
     @Override
     public Optional<Payment> findById(PaymentId id) {
         return readLines().stream()
-                .map(line -> line.toPayment())
+                .map(CsvPaymentLine::toPayment)
                 .filter(payment -> payment.getId().equals(id))
                 .findAny();
     }
@@ -75,7 +73,8 @@ class CsvPaymentRepository implements PaymentRepository {
                     .amount(payment.getAmount())
                     .build();
         } else {
-            lines.remove(payment);
+            final String paymentId = payment.getId().value();
+            lines.removeIf(line -> line.getId().equals(paymentId));
         }
 
         CsvPaymentLine csvPaymentLine = CsvPaymentLine.of(payment);
@@ -90,7 +89,7 @@ class CsvPaymentRepository implements PaymentRepository {
 
     @Override
     public List<Payment> findAll() {
-        return readLines().stream().map(line -> line.toPayment()).collect(Collectors.toList());
+        return readLines().stream().map(CsvPaymentLine::toPayment).collect(Collectors.toList());
     }
 
     @Override

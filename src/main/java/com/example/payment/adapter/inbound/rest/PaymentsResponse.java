@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Value
-public class PaymentsResponse {
+class PaymentsResponse {
     private final List<PaymentResponse> payments;
-
 
     static PaymentsResponse of(List<Payment> payments){
         List<PaymentResponse> paymentResponses = payments.stream()

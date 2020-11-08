@@ -1,5 +1,6 @@
 package com.example.payment.domain
 
+import com.example.payment.SampleCommands
 import com.example.payment.adapter.outbound.respository.inmemory.InMemoryPaymentRepositoryConfig
 import spock.lang.Specification
 
@@ -7,7 +8,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder
 import static org.hamcrest.Matchers.hasSize
 
 class FindAllPaymentsUseCaseSpec extends Specification implements SampleCommands {
-    PaymentRepository paymentRepository = new InMemoryPaymentRepositoryConfig().paymentRepository()
+    PaymentRepository paymentRepository = new InMemoryPaymentRepositoryConfig().inMemoryPaymentRepository()
     AddPaymentUseCase addPaymentUseCase = new PaymentConfiguration().addPaymentUseCase(paymentRepository)
     FindAllPaymentsUseCase findAllPaymentsUseCase = new PaymentConfiguration().findAllPaymentsUseCase(paymentRepository)
 

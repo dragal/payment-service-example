@@ -7,12 +7,15 @@ import com.example.payment.domain.model.UserId;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Value;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Currency;
 
 @Value
-public class AddPaymentRequest {
+class AddPaymentRequest {
     @NotNull
     private final String userId;
 

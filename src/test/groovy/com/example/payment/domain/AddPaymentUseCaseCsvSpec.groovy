@@ -1,5 +1,6 @@
 package com.example.payment.domain
 
+import com.example.payment.SampleCommands
 import com.example.payment.adapter.outbound.respository.csv.CsvPaymentRepositoryConfig
 import spock.lang.AutoCleanup
 import spock.lang.Specification
@@ -10,7 +11,7 @@ import java.util.stream.Collectors
 class AddPaymentUseCaseCsvSpec extends Specification implements SampleCommands{
     @AutoCleanup("delete")
     File csvFile = File.createTempFile("payments", ".csv")
-    PaymentRepository paymentRepository = new CsvPaymentRepositoryConfig().csvPaymentRepository(csvFile.getAbsolutePath());
+    PaymentRepository paymentRepository = new CsvPaymentRepositoryConfig().csvPaymentRepository(csvFile.getAbsolutePath())
     AddPaymentUseCase addPaymentUseCase = new PaymentConfiguration().addPaymentUseCase(paymentRepository)
 
     def "should add payment"() {
@@ -27,15 +28,15 @@ class AddPaymentUseCaseCsvSpec extends Specification implements SampleCommands{
         payment.amount == paymentCommand.amount
         payment.userId == paymentCommand.userId
         and: "payment saved to csv file"
-        def paymentLine = Files.lines(csvFile.toPath()).findFirst().get();
+        def paymentLine = Files.lines(csvFile.toPath()).findFirst().get()
         def expectedLine = toCvsLine(payment.getId().value(), paymentCommand)
         expectedLine == paymentLine
     }
 
     def toCvsLine(String id, AddPaymentCommand command) {
-        def addQuotes = { value -> "\"" + value + "\"" };
+        def addQuotes = { value -> "\"" + value + "\"" }
         return Arrays.asList(id, command.getUserId().value(), command.accountNumber.value(), command.amount.value(), command.amount.currency().currencyCode)
                 .stream().map(addQuotes)
-                .collect(Collectors.joining(","));
+                .collect(Collectors.joining(","))
     }
 }

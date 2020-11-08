@@ -7,7 +7,7 @@ import com.example.payment.domain.model.UserId
 import spock.lang.Specification
 
 class AddPaymentUseCaseSpec extends Specification {
-    PaymentRepository paymentRepository = new InMemoryPaymentRepositoryConfig().paymentRepository()
+    PaymentRepository paymentRepository = new InMemoryPaymentRepositoryConfig().inMemoryPaymentRepository()
     AddPaymentUseCase addPaymentUseCase = new PaymentConfiguration().addPaymentUseCase(paymentRepository)
 
     def "should add payment"() {
@@ -16,7 +16,7 @@ class AddPaymentUseCaseSpec extends Specification {
                 .accountNumber(Iban.of("PL123457890"))
                 .userId(UserId.of("tomekd"))
                 .amount(Money.of(BigDecimal.TEN,  Currency.getInstance("USD")))
-                .build();
+                .build()
 
 
         when: "client asks to add payment"
